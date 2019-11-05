@@ -6,14 +6,12 @@ import java.util.Map;
 
 
 public class Challenge3 {
-  private Challenge2 challenge2 = new Challenge2();
-
-  public byte recoverXorKey(final byte[] input) {
+  public static byte recoverXorKey(final byte[] input) {
     byte winningKey = 0;
     double highScore = Double.MIN_VALUE;
     for (byte k = Byte.MIN_VALUE; k < Byte.MAX_VALUE; k++) {
       final byte[] key = createKey(k, input.length);
-      final byte[] dec = challenge2.xor(input, key);
+      final byte[] dec = Challenge2.xor(input, key);
       final String str = bytesToStr(dec);
       final double score = score(str);
       if (score > highScore) {
@@ -24,7 +22,7 @@ public class Challenge3 {
     return winningKey;
   }
 
-  private double score(final String input) {
+  static double score(final String input) {
     // determine frequency of all characters
     final Map<Character, Integer> counts = new HashMap<>();
     input.toLowerCase().chars().forEach(n -> {
@@ -45,7 +43,7 @@ public class Challenge3 {
     return deviations.values().stream().reduce(100D, (acc, el) -> acc - el);
   }
 
-  public byte[] createKey(final byte b, final int len) {
+  public static byte[] createKey(final byte b, final int len) {
     final ByteBuffer key = ByteBuffer.allocate(len);
     for (int i = 0; i < len; i++) {
       key.put(b);
@@ -53,7 +51,7 @@ public class Challenge3 {
     return key.array();
   }
 
-  private String bytesToStr(final byte[] input) {
+  private static String bytesToStr(final byte[] input) {
     final StringBuilder output = new StringBuilder();
     for (byte b : input) {
       output.append((char) b);

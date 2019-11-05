@@ -3,7 +3,7 @@ package cryptopals;
 import java.nio.ByteBuffer;
 
 public class Challenge2 {
-  public byte[] xor(final byte[] a, final byte[] b) {
+  public static byte[] xor(final byte[] a, final byte[] b) {
     if (a.length != b.length) {
       throw new IllegalArgumentException("inputs must be same length");
     }
