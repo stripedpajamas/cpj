@@ -51,7 +51,7 @@ public class Challenge3 {
     return key.array();
   }
 
-  private static String bytesToStr(final byte[] input) {
+  public static String bytesToStr(final byte[] input) {
     final StringBuilder output = new StringBuilder();
     for (byte b : input) {
       output.append((char) b);
