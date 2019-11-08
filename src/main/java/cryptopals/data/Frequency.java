@@ -1,11 +1,24 @@
-package cryptopals;
+package cryptopals.data;
 
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Frequency {
+  public static final Set<Character> ENGLISH_PUNCTUATION = Stream.of(new Character[] {
+    Character.valueOf('\''),
+    Character.valueOf(','),
+    Character.valueOf('.'),
+    Character.valueOf('!'),
+    Character.valueOf(':'),
+    Character.valueOf(';'),
+    Character.valueOf('?'),
+    Character.valueOf('('),
+    Character.valueOf(')'),
+    Character.valueOf('"'),
+  }).collect(Collectors.toSet());
   public static final Map<Character, Double> ENGLISH = Stream.of(new AbstractMap.SimpleImmutableEntry[] {
     new AbstractMap.SimpleImmutableEntry<>(Character.valueOf('a'), 8.167),
     new AbstractMap.SimpleImmutableEntry<>(Character.valueOf('b'), 1.492),

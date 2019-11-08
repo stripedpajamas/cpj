@@ -3,21 +3,9 @@ package cryptopals;
 import java.util.Comparator;
 import java.util.List;
 
+import cryptopals.data.Pair;
+
 public class Challenge4 {
-  private static class Pair {
-    byte[] ciphertext;
-    byte[] plaintext;
-    Pair(byte[] ct, byte[] pt) {
-      this.ciphertext = ct;
-      this.plaintext = pt;
-    }
-    public byte[] getPlaintext() {
-      return plaintext;
-    }
-    public byte[] getCiphertext() {
-      return ciphertext;
-    }
-  }
   public static byte[] detectSingleByteXor(final List<byte[]> input) {
     return input.stream()
       .map(line -> {

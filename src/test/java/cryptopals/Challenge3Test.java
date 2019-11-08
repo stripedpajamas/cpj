@@ -15,7 +15,7 @@ public class Challenge3Test {
   @Test
   public void test_recoverXorKey_custom() {
     final byte key = 13;
-    final String msg = "hello world";
+    final String msg = "of all the things to type, hello world is not the best";
     final byte[] input = Challenge2.xor(
       Challenge3.createKey(key, msg.length()),
       msg.getBytes()

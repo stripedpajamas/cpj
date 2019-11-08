@@ -1,9 +1,10 @@
 package cryptopals;
 
 import java.nio.ByteBuffer;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import cryptopals.data.Frequency;
 
 public class Challenge3 {
   public static byte recoverXorKey(final byte[] input) {
@@ -24,23 +25,15 @@ public class Challenge3 {
 
   static double score(final String input) {
     // determine frequency of all characters
-    final Map<Character, Integer> counts = new HashMap<>();
-    input.toLowerCase().chars().forEach(n -> {
-      counts.compute((char) n, (k, v) -> v == null ? 1 : v + 1);
-    });
+    final Map<Object, Long> counts = input.toLowerCase().chars().boxed()
+        .collect(Collectors.groupingBy(c -> Character.valueOf((char) c.intValue()), Collectors.counting()));
     // translate frequency relative to length of input
     // and compare to english standard
-    final Map<Character, Double> deviations = new HashMap<>();
-    counts.entrySet().forEach(entry -> {
-      final Double freq = Frequency.ENGLISH.get(entry.getKey());
-      deviations.put(
-        entry.getKey(),
-        freq == null ? 50 : Math.log(Math.abs(freq - (entry.getValue() / input.length())))
-      );
-    });
-
-    // generate a score
-    return deviations.values().stream().reduce(100D, (acc, el) -> acc - el);
+    return 100D - counts.entrySet().stream().filter(entry -> !Frequency.ENGLISH_PUNCTUATION.contains(entry.getKey()))
+        .collect(Collectors.summingDouble(entry -> {
+          final Double freq = Frequency.ENGLISH.get(entry.getKey());
+          return freq == null ? 50 : Math.log(Math.abs(freq - (entry.getValue() / input.length())));
+        }));
   }
 
   public static byte[] createKey(final byte b, final int len) {
